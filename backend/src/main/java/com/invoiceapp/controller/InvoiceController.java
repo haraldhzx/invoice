@@ -5,6 +5,7 @@ import com.invoiceapp.model.dto.InvoiceDto;
 import com.invoiceapp.model.entity.User;
 import com.invoiceapp.model.enums.InvoiceStatus;
 import com.invoiceapp.repository.UserRepository;
+import com.invoiceapp.service.InvoiceProcessingService;
 import com.invoiceapp.service.InvoiceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,7 +22,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -33,6 +36,7 @@ import java.util.UUID;
 public class InvoiceController {
 
     private final InvoiceService invoiceService;
+    private final InvoiceProcessingService invoiceProcessingService;
     private final UserRepository userRepository;
 
     @GetMapping
@@ -85,6 +89,16 @@ public class InvoiceController {
         User user = getUserFromDetails(userDetails);
         InvoiceDto created = invoiceService.createInvoice(request, user.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @PostMapping("/upload")
+    @Operation(summary = "Upload invoice", description = "Upload and process invoice image/PDF with AI analysis")
+    public ResponseEntity<InvoiceDto> uploadInvoice(
+            @RequestParam("file") MultipartFile file,
+            @AuthenticationPrincipal UserDetails userDetails) throws IOException {
+        User user = getUserFromDetails(userDetails);
+        InvoiceDto processed = invoiceProcessingService.uploadAndProcessInvoice(file, user.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(processed);
     }
 
     @PutMapping("/{id}")
