@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.invoiceapp.ui.analytics.AnalyticsScreen
 import com.invoiceapp.ui.auth.AuthViewModel
 import com.invoiceapp.ui.invoice.InvoiceListScreen
 import com.invoiceapp.util.Resource
@@ -112,16 +113,6 @@ fun HomeScreen(
                 2 -> CategoriesScreen()
             }
         }
-    }
-}
-
-@Composable
-fun AnalyticsScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = androidx.compose.ui.Alignment.Center
-    ) {
-        Text("Analytics Screen - Coming Soon")
     }
 }
 
