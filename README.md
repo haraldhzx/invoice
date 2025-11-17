@@ -28,12 +28,22 @@ Invoice Service is a full-stack application that combines:
 - ✅ **Analytics**: Spending by category, time range, vendor analysis
 - ✅ **Audit Trail**: Compliance logging for all operations
 
-### Mobile Apps (In Development)
-- 📸 **Camera Scanner**: Capture invoices with MLKit (Android) / VisionKit (iOS)
-- 💾 **Offline Support**: Local storage with sync
-- 🔒 **Biometric Auth**: Fingerprint / Face ID
-- 📊 **Charts**: Spending visualizations
-- 🌙 **Dark Mode**: Full theme support
+### Android App (✅ Completed)
+- ✅ **Authentication**: Login/Register with JWT tokens, secure token storage
+- ✅ **Camera Scanner**: CameraX integration with image capture and upload
+- ✅ **Invoice Management**: List, upload, detail views with status tracking
+- ✅ **Analytics Dashboard**: Spending by category with time period filters
+- ✅ **Category Management**: View, create, delete custom categories
+- ✅ **MCP Query Interface**: Natural language spending queries with chat UI
+- ✅ **Material Design 3**: Modern UI with light/dark mode support
+- ✅ **MVVM Architecture**: Clean architecture with Hilt dependency injection
+- ✅ **Offline Ready**: DataStore for secure preferences, Room database ready
+
+### iOS App (📋 Planned)
+- 📸 **Camera Scanner**: VisionKit document scanning
+- 💾 **Offline Support**: Core Data with CloudKit sync
+- 🔒 **Biometric Auth**: Face ID / Touch ID
+- 📊 **SwiftUI**: Modern declarative UI
 
 ## 🚀 Quick Start
 
@@ -322,19 +332,23 @@ xcodebuild test -scheme InvoiceApp
 
 ## 🚧 Development Status
 
-### ✅ Completed (Epics 1-5)
-- [x] Project setup and infrastructure
-- [x] Core backend API (auth, invoices, categories)
-- [x] AI invoice analysis with GPT-4 Vision
-- [x] Transaction import (CSV)
-- [x] MCP query interface (natural language)
+### ✅ Completed (Epics 1-6)
+- [x] **Epic 1**: Project setup and infrastructure
+- [x] **Epic 2**: Core backend API (auth, invoices, categories, transactions)
+- [x] **Epic 3**: AI invoice analysis with GPT-4 Vision + Tesseract OCR
+- [x] **Epic 4**: Transaction import (CSV with flexible column mapping)
+- [x] **Epic 5**: MCP query interface (natural language spending queries)
+- [x] **Epic 6**: Android mobile app (fully functional with all features)
 
-### 🔄 In Progress
-- [ ] Mobile app implementation (Android/iOS)
-- [ ] Analytics dashboards
-- [ ] Budget tracking
+### 📋 Planned Epics
+- [ ] **Epic 7**: iOS mobile app
+- [ ] **Epic 8**: Analytics dashboards (additional visualizations)
+- [ ] **Epic 9**: Testing & QA (comprehensive test suites)
+- [ ] **Epic 10**: Deployment & DevOps (production configuration)
+- [ ] **Epic 11**: Security hardening (penetration testing, audits)
+- [ ] **Epic 12**: UX enhancements (animations, accessibility)
 
-### 📋 Planned
+### 🎯 Future Features
 - [ ] OFX/QFX bank import format
 - [ ] Recurring expense detection
 - [ ] Budget alerts and notifications
