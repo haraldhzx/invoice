@@ -108,18 +108,21 @@ Managed via Swift Package Manager:
 
 ## Development Status
 
-🚧 **Under Development**
+✅ **Completed**
 
-Core functionality planned:
+All core functionality implemented:
 - ✅ Project structure setup
-- ⏳ API client implementation
-- ⏳ Authentication flow
-- ⏳ Document scanner with VisionKit
-- ⏳ Invoice list and detail views
-- ⏳ Category management
-- ⏳ Analytics with Swift Charts
-- ⏳ Settings and preferences
-- ⏳ Widget support
+- ✅ API client implementation with async/await
+- ✅ Authentication flow (Login/Register/Logout)
+- ✅ Document scanner with VisionKit
+- ✅ Invoice list, detail, and edit views
+- ✅ Invoice upload with camera scanning
+- ✅ Category management (create, edit, delete)
+- ✅ Analytics with Swift Charts (trends, budgets, forecasts)
+- ✅ MCP query interface (natural language AI queries)
+- ✅ Budget tracking with progress indicators
+- ✅ Settings and account management
+- ⏳ Widget support (planned for future release)
 
 ## App Store
 
