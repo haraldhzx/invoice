@@ -8,6 +8,8 @@ struct Invoice: Codable, Identifiable {
     let date: Date
     let categoryId: UUID?
     let category: Category?
+    let payerId: UUID?
+    let payerName: String?
     let description: String?
     let invoiceNumber: String?
     let imageUrl: String?
@@ -18,7 +20,7 @@ struct Invoice: Codable, Identifiable {
 
     enum CodingKeys: String, CodingKey {
         case id, userId, vendorName, totalAmount, date, categoryId, category
-        case description, invoiceNumber, imageUrl, aiAnalysis, status, createdAt, updatedAt
+        case payerId, payerName, description, invoiceNumber, imageUrl, aiAnalysis, status, createdAt, updatedAt
     }
 }
 
@@ -49,6 +51,7 @@ struct InvoiceCreateRequest: Codable {
     let totalAmount: Decimal
     let date: Date
     let categoryId: UUID?
+    let payerId: UUID?
     let description: String?
     let invoiceNumber: String?
 }
@@ -58,6 +61,7 @@ struct InvoiceUpdateRequest: Codable {
     let totalAmount: Decimal?
     let date: Date?
     let categoryId: UUID?
+    let payerId: UUID?
     let description: String?
     let invoiceNumber: String?
     let status: InvoiceStatus?

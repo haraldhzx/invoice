@@ -52,6 +52,9 @@ public class InvoiceDto {
     private UUID subcategoryId;
     private String subcategoryName;
 
+    private UUID payerId;
+    private String payerName;
+
     private InvoiceStatus status;
 
     @DecimalMin(value = "0.0", message = "Confidence must be between 0 and 1")

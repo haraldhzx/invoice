@@ -63,6 +63,10 @@ public class Invoice {
     @JoinColumn(name = "subcategory_id")
     private Category subcategory;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payer_id")
+    private Payer payer;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private InvoiceStatus status = InvoiceStatus.PENDING;
