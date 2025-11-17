@@ -9,7 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.invoiceapp.ui.analytics.AnalyticsScreen
 import com.invoiceapp.ui.auth.AuthViewModel
+import com.invoiceapp.ui.category.CategoryScreen
 import com.invoiceapp.ui.invoice.InvoiceListScreen
+import com.invoiceapp.ui.query.QueryScreen
 import com.invoiceapp.util.Resource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,6 +66,7 @@ fun HomeScreen(
                             0 -> "Invoices"
                             1 -> "Analytics"
                             2 -> "Categories"
+                            3 -> "Ask"
                             else -> "Invoice App"
                         }
                     )
@@ -103,6 +106,12 @@ fun HomeScreen(
                     selected = selectedTab == 2,
                     onClick = { selectedTab = 2 }
                 )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.QuestionAnswer, contentDescription = null) },
+                    label = { Text("Ask") },
+                    selected = selectedTab == 3,
+                    onClick = { selectedTab = 3 }
+                )
             }
         }
     ) { paddingValues ->
@@ -110,18 +119,9 @@ fun HomeScreen(
             when (selectedTab) {
                 0 -> InvoiceListScreen()
                 1 -> AnalyticsScreen()
-                2 -> CategoriesScreen()
+                2 -> CategoryScreen()
+                3 -> QueryScreen()
             }
         }
-    }
-}
-
-@Composable
-fun CategoriesScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = androidx.compose.ui.Alignment.Center
-    ) {
-        Text("Categories Screen - Coming Soon")
     }
 }
