@@ -25,8 +25,11 @@ Invoice Service is a full-stack application that combines:
 - ✅ **Transaction Import**: CSV parser with flexible column mapping
 - ✅ **MCP Query Interface**: Natural language spending queries
 - ✅ **Categories**: 17+ default categories + custom user categories
-- ✅ **Analytics**: Spending by category, time range, vendor analysis
-- ✅ **Audit Trail**: Compliance logging for all operations
+- ✅ **Enhanced Analytics**: Spending trends, vendor analysis, forecasting, recurring expense detection
+- ✅ **Budget Tracking**: Multi-period budgets with alerts and real-time tracking
+- ✅ **Security Hardening**: Rate limiting, input sanitization, OWASP protection, security audit logging
+- ✅ **Comprehensive Testing**: 65+ unit and integration tests with Testcontainers
+- ✅ **Production Deployment**: Docker, CI/CD pipeline, monitoring with Prometheus/Grafana
 
 ### Android App (✅ Completed)
 - ✅ **Authentication**: Login/Register with JWT tokens, secure token storage
@@ -123,7 +126,7 @@ open InvoiceApp.xcodeproj
    └──────────┘  └──────────┘   └─────────┘
 ```
 
-## 📊 API Endpoints (33 Total)
+## 📊 API Endpoints (57+ Total)
 
 ### Authentication (4 endpoints)
 ```
@@ -167,6 +170,27 @@ PUT    /api/transactions/{id}         # Update transaction
 DELETE /api/transactions/{id}         # Delete transaction
 POST   /api/transactions/import/csv   # Import bank CSV
 GET    /api/transactions/unreconciled # Get unreconciled
+```
+
+### Enhanced Analytics (6 endpoints)
+```
+GET    /api/analytics/trends/monthly       # Monthly spending trends with % changes
+GET    /api/analytics/trends/weekly        # Weekly spending trends
+GET    /api/analytics/vendors/top          # Top vendors by spending
+GET    /api/analytics/recurring-expenses   # Detect recurring payments
+GET    /api/analytics/compare              # Compare two time periods
+GET    /api/analytics/forecast             # Spending forecast
+```
+
+### Budget Management (6 endpoints)
+```
+GET    /api/budgets              # List all budgets with spending
+GET    /api/budgets/{id}         # Get budget details
+POST   /api/budgets              # Create new budget
+PUT    /api/budgets/{id}         # Update budget
+DELETE /api/budgets/{id}         # Delete budget
+GET    /api/budgets/exceeded     # Get exceeded budgets
+GET    /api/budgets/nearing-limit # Get budgets near limit
 ```
 
 ### MCP Queries (2 endpoints)
@@ -332,20 +356,20 @@ xcodebuild test -scheme InvoiceApp
 
 ## 🚧 Development Status
 
-### ✅ Completed (Epics 1-6)
+### ✅ Completed (Epics 1-6, 8-11)
 - [x] **Epic 1**: Project setup and infrastructure
 - [x] **Epic 2**: Core backend API (auth, invoices, categories, transactions)
 - [x] **Epic 3**: AI invoice analysis with GPT-4 Vision + Tesseract OCR
 - [x] **Epic 4**: Transaction import (CSV with flexible column mapping)
 - [x] **Epic 5**: MCP query interface (natural language spending queries)
 - [x] **Epic 6**: Android mobile app (fully functional with all features)
+- [x] **Epic 8**: Enhanced analytics (trends, vendor analysis, forecasting, budgets)
+- [x] **Epic 9**: Testing & QA (65+ unit and integration tests)
+- [x] **Epic 10**: Deployment & DevOps (Docker, CI/CD, monitoring)
+- [x] **Epic 11**: Security hardening (rate limiting, OWASP protection, audit logging)
 
-### 📋 Planned Epics
+### 📋 Remaining Epics
 - [ ] **Epic 7**: iOS mobile app
-- [ ] **Epic 8**: Analytics dashboards (additional visualizations)
-- [ ] **Epic 9**: Testing & QA (comprehensive test suites)
-- [ ] **Epic 10**: Deployment & DevOps (production configuration)
-- [ ] **Epic 11**: Security hardening (penetration testing, audits)
 - [ ] **Epic 12**: UX enhancements (animations, accessibility)
 
 ### 🎯 Future Features
