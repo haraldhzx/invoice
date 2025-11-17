@@ -56,4 +56,55 @@ public interface InvoiceRepository extends JpaRepository<Invoice, UUID> {
 
     @Query("SELECT i FROM Invoice i WHERE i.status = :status AND i.createdAt < :threshold")
     List<Invoice> findStaleInvoices(@Param("status") InvoiceStatus status, @Param("threshold") java.time.LocalDateTime threshold);
+
+    // Enhanced Analytics Queries
+
+    @Query("SELECT c.name, SUM(i.totalAmount) FROM Invoice i JOIN i.category c " +
+           "WHERE i.user.id = :userId AND i.date BETWEEN :startDate AND :endDate " +
+           "GROUP BY c.name ORDER BY SUM(i.totalAmount) DESC")
+    List<Object[]> getSpendingByCategory(
+        @Param("userId") UUID userId,
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate
+    );
+
+    @Query("SELECT FUNCTION('TO_CHAR', i.date, 'YYYY-MM') as month, SUM(i.totalAmount), COUNT(i) " +
+           "FROM Invoice i WHERE i.user.id = :userId AND i.date BETWEEN :startDate AND :endDate " +
+           "GROUP BY FUNCTION('TO_CHAR', i.date, 'YYYY-MM') " +
+           "ORDER BY FUNCTION('TO_CHAR', i.date, 'YYYY-MM')")
+    List<Object[]> getMonthlySpending(
+        @Param("userId") UUID userId,
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate
+    );
+
+    @Query("SELECT EXTRACT(YEAR FROM i.date), EXTRACT(WEEK FROM i.date), SUM(i.totalAmount), COUNT(i) " +
+           "FROM Invoice i WHERE i.user.id = :userId AND i.date BETWEEN :startDate AND :endDate " +
+           "GROUP BY EXTRACT(YEAR FROM i.date), EXTRACT(WEEK FROM i.date) " +
+           "ORDER BY EXTRACT(YEAR FROM i.date), EXTRACT(WEEK FROM i.date)")
+    List<Object[]> getWeeklySpending(
+        @Param("userId") UUID userId,
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate
+    );
+
+    @Query("SELECT i.vendorName, SUM(i.totalAmount), COUNT(i), AVG(i.totalAmount), " +
+           "MIN(i.date), MAX(i.date), " +
+           "(SELECT c.name FROM Invoice i2 JOIN i2.category c WHERE i2.vendorName = i.vendorName AND i2.user.id = :userId " +
+           "GROUP BY c.name ORDER BY COUNT(c) DESC LIMIT 1) " +
+           "FROM Invoice i WHERE i.user.id = :userId AND i.date BETWEEN :startDate AND :endDate AND i.vendorName IS NOT NULL " +
+           "GROUP BY i.vendorName ORDER BY SUM(i.totalAmount) DESC")
+    List<Object[]> getVendorAnalytics(
+        @Param("userId") UUID userId,
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate
+    );
+
+    @Query("SELECT i.vendorName, c.name, AVG(i.totalAmount), COUNT(i), " +
+           "AVG(EXTRACT(DAY FROM (i.date - LAG(i.date) OVER (PARTITION BY i.vendorName ORDER BY i.date)))), " +
+           "CASE WHEN STDDEV(EXTRACT(DAY FROM (i.date - LAG(i.date) OVER (PARTITION BY i.vendorName ORDER BY i.date)))) < 3 THEN true ELSE false END " +
+           "FROM Invoice i LEFT JOIN i.category c WHERE i.user.id = :userId " +
+           "GROUP BY i.vendorName, c.name HAVING COUNT(i) >= 3 " +
+           "ORDER BY COUNT(i) DESC")
+    List<Object[]> findRecurringExpenses(@Param("userId") UUID userId);
 }
